@@ -1,7 +1,8 @@
+package org.example.dto;
 
-package org.example.model;
+public class EquipamentoContagemFalhasDTO {
 
-public class Equipamento {
+
     private Long id;
 
     private String nome;
@@ -12,20 +13,6 @@ public class Equipamento {
 
     private String statusOperacional;
 
-    public Equipamento(Long id, String nome, String numeroDeSerie, String areaSetor, String statusOperacional) {
-        this.id = id;
-        this.nome = nome;
-        this.numeroDeSerie = numeroDeSerie;
-        this.areaSetor = areaSetor;
-        this.statusOperacional = statusOperacional;
-    }
-
-    public Equipamento(String nome, String numeroDeSerie, String areaSetor, String statusOperacional) {
-        this.nome = nome;
-        this.numeroDeSerie = numeroDeSerie;
-        this.areaSetor = areaSetor;
-        this.statusOperacional = statusOperacional;
-    }
 
     public Long getId() {
         return id;
@@ -65,5 +52,15 @@ public class Equipamento {
 
     public void setStatusOperacional(String statusOperacional) {
         this.statusOperacional = statusOperacional;
+    }
+
+
+    public EquipamentoContagemFalhasDTO(Long id, String nome, String numeroDeSerie, String areaSetor, String statusOperacional) {
+        this.id = id;
+        this.nome = nome;
+        this.numeroDeSerie = numeroDeSerie;
+        this.areaSetor = areaSetor;
+        this.statusOperacional = statusOperacional;
+
     }
 }
