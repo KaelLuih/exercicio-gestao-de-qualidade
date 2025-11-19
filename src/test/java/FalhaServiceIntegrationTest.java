@@ -58,7 +58,7 @@ public class FalhaServiceIntegrationTest {
 
     @BeforeAll
     static void setupDatabase() throws Exception {
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              Statement stmt = conn.createStatement()) {
 
             stmt.execute(SQL_DROP_TABLE_FALHA);
@@ -73,7 +73,7 @@ public class FalhaServiceIntegrationTest {
 
     @AfterAll
     static void tearDownDatabase() throws Exception {
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              Statement stmt = conn.createStatement()) {
 
             stmt.execute(SQL_DROP_TABLE_FALHA);
@@ -85,7 +85,7 @@ public class FalhaServiceIntegrationTest {
 
     @BeforeEach
     void setupTest() throws Exception {
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              Statement stmt = conn.createStatement()) {
 
             stmt.execute(SQL_TRUNCATE_FALHA);
@@ -105,7 +105,7 @@ public class FalhaServiceIntegrationTest {
 
         // ARRANGE — criar equipamento
         Long equipId;
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              PreparedStatement stmt = conn.prepareStatement(
                      """
                      INSERT INTO Equipamento
@@ -137,7 +137,7 @@ public class FalhaServiceIntegrationTest {
         assertEquals("ABERTA", falhaSalva.getStatus());
 
         // Verificar se equipamento foi atualizado para EM_MANUTENCAO
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              PreparedStatement stmt = conn.prepareStatement(
                      "SELECT statusOperacional FROM Equipamento WHERE id = ?")) {
 
@@ -179,7 +179,7 @@ public class FalhaServiceIntegrationTest {
         Long equipId;
 
         // criar equipamento
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              PreparedStatement stmt = conn.prepareStatement(
                      """
                      INSERT INTO Equipamento (nome, numeroDeSerie, areaSetor, statusOperacional)
@@ -195,7 +195,7 @@ public class FalhaServiceIntegrationTest {
         }
 
         // inserir várias falhas
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              Statement stmt = conn.createStatement()) {
             String sql = String.format("""
                 INSERT INTO Falha (equipamentoId, dataHoraOcorrencia, descricao,

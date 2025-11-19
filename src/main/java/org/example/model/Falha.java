@@ -1,7 +1,6 @@
 package org.example.model;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class Falha {
@@ -31,29 +30,6 @@ public class Falha {
     private String status;
 
     private BigDecimal tempoParadaHoras;
-
-    public Falha(Long id, Long equipamentoId, LocalDateTime dataHoraOcorrencia, String descricao, String criticidade, String status, BigDecimal tempoParadaHoras) {
-        this.id = id;
-        this.equipamentoId = equipamentoId;
-        this.dataHoraOcorrencia = dataHoraOcorrencia;
-        this.descricao = descricao;
-        this.criticidade = criticidade;
-        this.status = status;
-        this.tempoParadaHoras = tempoParadaHoras;
-    }
-
-    public Falha(Long equipamentoId, LocalDateTime dataHoraOcorrencia, String descricao, String criticidade, String status, BigDecimal tempoParadaHoras) {
-        this.equipamentoId = equipamentoId;
-        this.dataHoraOcorrencia = dataHoraOcorrencia;
-        this.descricao = descricao;
-        this.criticidade = criticidade;
-        this.status = status;
-        this.tempoParadaHoras = tempoParadaHoras;
-    }
-
-    public Falha() {
-
-    }
 
     public Long getId() {
         return id;
@@ -108,6 +84,25 @@ public class Falha {
     }
 
     public void setTempoParadaHoras(BigDecimal tempoParadaHoras) {
+        this.tempoParadaHoras = tempoParadaHoras;
+    }
+
+    public Falha() {
+        this.equipamentoId = equipamentoId;
+        this.dataHoraOcorrencia = dataHoraOcorrencia;
+        this.descricao = descricao;
+        this.criticidade = criticidade;
+        this.status = status;
+        this.tempoParadaHoras = tempoParadaHoras;
+    }
+
+    public Falha(Long id, Long equipamentoId, LocalDateTime dataHoraOcorrencia, String descricao, String criticidade, String status, BigDecimal tempoParadaHoras) {
+        this.id = id;
+        this.equipamentoId = equipamentoId;
+        this.dataHoraOcorrencia = dataHoraOcorrencia;
+        this.descricao = descricao;
+        this.criticidade = criticidade;
+        this.status = status;
         this.tempoParadaHoras = tempoParadaHoras;
     }
 }

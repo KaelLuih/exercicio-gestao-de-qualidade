@@ -38,7 +38,7 @@ public class EquipamentoServiceIntegrationTest {
     @BeforeAll
     static void setupDatabase() throws Exception {
         // 1. Conecta ao banco de TESTE
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              Statement stmt = conn.createStatement()) {
 
             // 2. Destrói a tabela (caso exista de um teste anterior falho)
@@ -59,7 +59,7 @@ public class EquipamentoServiceIntegrationTest {
     @AfterAll
     static void tearDownDatabase() throws Exception {
         // 4. Destrói a tabela ao final de TODOS os testes
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              Statement stmt = conn.createStatement()) {
 
             stmt.execute(SQL_DROP_TABLE);
@@ -74,7 +74,7 @@ public class EquipamentoServiceIntegrationTest {
     @BeforeEach
     void setupTest() throws Exception {
         // 5. Limpa os dados da tabela ANTES de cada teste
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              Statement stmt = conn.createStatement()) {
 
             stmt.execute(SQL_TRUNCATE_TABLE);
@@ -103,7 +103,7 @@ public class EquipamentoServiceIntegrationTest {
 
         assertNotNull(equipamentoNovo);
 
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery("""
                      SELECT  nome
@@ -113,6 +113,7 @@ public class EquipamentoServiceIntegrationTest {
                      FROM Equipamento WHERE id =
                      """ + equipamentoNovo.getId())) {
 
+            assertTrue(rs.next(), "nao cadastrou");
             assertEquals("FRESA", rs.getString("nome"));
             assertEquals("CÓDIGOTESTE", rs.getString("numeroDeSerie"));
             assertEquals("SETORTESTE", rs.getString("areaSetor"));
@@ -133,7 +134,7 @@ public class EquipamentoServiceIntegrationTest {
 
         Long idGerado = 0L;
 
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              PreparedStatement stmt = conn.prepareStatement(insertQuery,
                      Statement.RETURN_GENERATED_KEYS)) {
             stmt.executeUpdate();

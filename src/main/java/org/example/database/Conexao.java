@@ -6,7 +6,10 @@ import java.sql.SQLException;
 
 public class Conexao {
 
-    public static Connection conectar() throws SQLException {
-        return null;
+    private final static String URL = "jdbc:mysql://localhost:3306/teste?useSSL=false&serverTimezone=UTC";
+    private final static String NAME = "root";
+    private final static String SENHA = "mysqlPW";
+    public static Connection conexao()throws SQLException{
+        return DriverManager.getConnection(URL,NAME,SENHA);
     }
 }

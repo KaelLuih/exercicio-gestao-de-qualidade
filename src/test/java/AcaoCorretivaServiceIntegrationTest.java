@@ -93,7 +93,7 @@ public class AcaoCorretivaServiceIntegrationTest {
     // ---------------------------
     @BeforeAll
     static void setupDatabase() throws Exception {
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              Statement stmt = conn.createStatement()) {
 
             stmt.execute(SQL_DROP);
@@ -105,7 +105,7 @@ public class AcaoCorretivaServiceIntegrationTest {
 
     @AfterAll
     static void tearDownDatabase() throws Exception {
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              Statement stmt = conn.createStatement()) {
 
             stmt.execute(SQL_DROP);
@@ -114,7 +114,7 @@ public class AcaoCorretivaServiceIntegrationTest {
 
     @BeforeEach
     void setupEach() throws Exception {
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              Statement stmt = conn.createStatement()) {
 
             stmt.execute(SQL_TRUNCATE);
@@ -157,7 +157,7 @@ public class AcaoCorretivaServiceIntegrationTest {
 
         // 1. Criar equipamento
         Long equipId;
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              PreparedStatement stmt = conn.prepareStatement(
                      "INSERT INTO Equipamento (nome,numeroDeSerie,areaSetor,statusOperacional) VALUES ('E1','S1','A1','OPERACIONAL')",
                      Statement.RETURN_GENERATED_KEYS)) {
@@ -170,7 +170,7 @@ public class AcaoCorretivaServiceIntegrationTest {
 
         // 2. Criar falha
         Long falhaId;
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              PreparedStatement stmt = conn.prepareStatement(
                      """
                      INSERT INTO Falha (equipamentoId,dataHoraOcorrencia,descricao,criticidade,status,tempoParadaHoras)
@@ -199,7 +199,7 @@ public class AcaoCorretivaServiceIntegrationTest {
         assertNotNull(salvo.getId());
 
         // 4. Verificar falha → deve estar RESOLVIDA
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              PreparedStatement stmt = conn.prepareStatement(
                      "SELECT status FROM Falha WHERE id = ?")) {
 
@@ -221,7 +221,7 @@ public class AcaoCorretivaServiceIntegrationTest {
 
         // 1. Criar equipamento (colocamos ele em EM_MANUTENCAO)
         Long equipId;
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              PreparedStatement stmt = conn.prepareStatement(
                      "INSERT INTO Equipamento (nome,numeroDeSerie,areaSetor,statusOperacional) VALUES ('E2','S2','A2','EM_MANUTENCAO')",
                      Statement.RETURN_GENERATED_KEYS)) {
@@ -234,7 +234,7 @@ public class AcaoCorretivaServiceIntegrationTest {
 
         // 2. Criar falha CRÍTICA ABERTA
         Long falhaId;
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              PreparedStatement stmt = conn.prepareStatement(
                      """
                      INSERT INTO Falha (equipamentoId,dataHoraOcorrencia,descricao,
@@ -262,7 +262,7 @@ public class AcaoCorretivaServiceIntegrationTest {
         acaoService.registrarConclusaoDeAcao(acao);
 
         // 4. Validar: Falha → RESOLVIDA
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              PreparedStatement stmt = conn.prepareStatement(
                      "SELECT status FROM Falha WHERE id = ?")) {
 
@@ -273,7 +273,7 @@ public class AcaoCorretivaServiceIntegrationTest {
         }
 
         // 5. Validar: Equipamento → OPERACIONAL
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              PreparedStatement stmt = conn.prepareStatement(
                      "SELECT statusOperacional FROM Equipamento WHERE id = ?")) {
 

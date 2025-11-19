@@ -6,6 +6,7 @@ import org.example.service.relatorioservice.RelatorioService;
 import org.example.service.relatorioservice.RelatorioServiceImpl;
 import org.junit.jupiter.api.*;
 
+import java.math.BigDecimal;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
@@ -36,8 +37,8 @@ public class RelatorioServiceTest {
         assertTrue(lista.size() > 0);
 
         RelatorioParadaDTO dto = lista.get(0);
-        assertNotNull(dto.getNomeEquipamento());
-        assertTrue(dto.getTotalHorasParadas() > 0);
+        assertNotNull(dto.getNome());
+        assertTrue(dto.getTempoParadaHoras().compareTo(BigDecimal.ZERO) > 0);
     }
 
     // ------------------------------ TESTE 2 ------------------------------
@@ -62,8 +63,8 @@ public class RelatorioServiceTest {
         Optional<FalhaDetalhadaDTO> detalhes = service.buscarDetalhesCompletosFalha(falhaExistente);
 
         assertTrue(detalhes.isPresent());
-        assertNotNull(detalhes.get().getFalha());
-        assertNotNull(detalhes.get().getEquipamento());
+        assertNotNull(detalhes.get().getFalhaId());
+        assertNotNull(detalhes.get().getEquipamentoId());
     }
 
     // ------------------------------ TESTE 4 ------------------------------
@@ -83,7 +84,7 @@ public class RelatorioServiceTest {
 
         assertNotNull(lista);
         assertTrue(lista.size() > 0);
-        assertTrue(lista.get(0).getTotalFalhas() >= 1);
+        assertTrue(lista.get(0).getId() >= 1);
     }
 
     // ------------------------------ TESTE 6 ------------------------------

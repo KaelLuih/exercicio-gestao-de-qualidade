@@ -5,7 +5,7 @@ import java.sql.Statement;
 
 public class TestUtils {
     public static void inserirEquipamentosFalhasEAcoes() {
-        try (Connection conn = Conexao.conectar();
+        try (Connection conn = Conexao.conexao();
              Statement stmt = conn.createStatement()) {
 
             stmt.execute("""
